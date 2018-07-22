@@ -1,11 +1,9 @@
 const express = require('express');
-
+const path = require('path');
 const app = express();
 
-app.set('view engine', 'ejs');
+app.use('/', express.static('dist'));
 
-app.use('/assets', express.static('dist'));
-
-app.get('/', (req, res) => res.render('./templates/index'));
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'dist/index.html')));
 
 app.listen(8080, () => console.log('app is running!'));
