@@ -4,7 +4,7 @@
   "description": "simple carb tracking app",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon index.js",
+    "start:dev": "nodemon server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:watch": "webpack --mode=development --watch",
     "build:prod": "webpack --mode=production"
@@ -26,14 +26,18 @@
   },
   "homepage": "https://github.com/Shaun2D2/keto31#readme",
   "dependencies": {
+    "aws-sdk": "^2.279.1",
     "axios": "^0.18.0",
     "babel-loader": "^7.1.5",
     "babel-preset-env": "^1.7.0",
+    "body-parser": "^1.18.3",
     "bootstrap": "^4.1.2",
     "bootswatch": "^4.1.2",
     "css-loader": "^1.0.0",
+    "dotenv": "^6.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
+    "moment": "^2.22.2",
     "nodemon": "^1.18.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
@@ -42,6 +46,7 @@
     "redux": "^4.0.0",
     "sass-loader": "^7.0.3",
     "style-loader": "^0.21.0",
+    "uuid": "^3.3.2",
     "webpack": "^4.16.1"
   },
   "devDependencies": {
