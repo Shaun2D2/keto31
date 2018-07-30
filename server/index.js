@@ -1,25 +1,17 @@
 const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const express = require('express');
-const app = express();
 
 require('dotenv').config();
 
 const db = require('./database/connection');
+const jwtConfig = require('./config/jwt');
 
-app.use(bodyParser.json());
-app.use('/', express.static('dist'));
+const app = express();
 
-const opts = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt'),
-  secretOrKey: process.env.APP_KEY,
-  issuer: process.env.APP_HOST,
-  audience: process.env.APP_HOST,
-};
+passport.use(new JwtStrategy(jwtConfig, async (jwt_payload, done) =>{
 
-passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
   const params = {
     TableName: 'Keto31.Users',
     Key: {
@@ -28,7 +20,7 @@ passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
   };
 
   try {
-    const user = await db.get(params);
+    const user = await db.get(params).promise();
 
     if(user.Item) {
       return done(null, user.Item);
@@ -40,6 +32,10 @@ passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
     return done(e, false);
   }
 }));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use('/', express.static('dist'));
 
 app.use(passport.initialize());
 
