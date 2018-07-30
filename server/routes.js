@@ -1,5 +1,6 @@
 const path = require('path');
 const passport = require('passport');
+const userController = require('./controllers/user');
 const entryController = require('./controllers/entry');
 const loginController = require('./controllers/login');
 const registerController = require('./controllers/register');
@@ -25,6 +26,12 @@ const routes = (app) => {
    *
    */
   app.post('/api/login', loginController.index);
+
+  /**
+   * get user singleton
+   *
+   */
+  app.get('/api/user', passport.authenticate('jwt', { session: false }), userController.show);
 
   /**
    * base route for the frontend application
