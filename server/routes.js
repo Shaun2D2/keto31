@@ -1,6 +1,7 @@
 const path = require('path');
 const passport = require('passport');
 const entryController = require('./controllers/entry');
+const loginController = require('./controllers/login');
 const registerController = require('./controllers/register');
 
 const routes = (app) => {
@@ -18,6 +19,12 @@ const routes = (app) => {
    *
    */
   app.post('/api/register', registerController.create);
+
+  /**
+   * user login
+   *
+   */
+  app.post('/api/login', loginController.index);
 
   /**
    * base route for the frontend application
