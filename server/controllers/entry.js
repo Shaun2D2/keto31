@@ -4,11 +4,12 @@ const moment = require('moment');
 
 const controller = {
   async index(req, res) {
-    var params = {
+    const { Email } = req.user;
+    const params = {
       TableName: 'Keto31.CarbEntry',
       FilterExpression: 'UserId = :userid',
       ExpressionAttributeValues: {
-        ':userid': '001' // replace with a real user ID
+        ':userid': Email
       }
     };
     try {
@@ -25,14 +26,14 @@ const controller = {
   },
   async create(req, res) {
     const { carbCount } = req.body;
-
+    const { Email } = req.user;
     const currentDate = moment().unix();
 
     const params = {
       TableName: 'Keto31.CarbEntry',
       Item: {
         EntryId: uuidv4(),
-        UserId: '001', // this will eventually be replaced with a real user ID
+        UserId: Email,
         CarbCount: carbCount,
         CreatedAt: currentDate,
         UpdatedAt: currentDate
@@ -53,9 +54,12 @@ const controller = {
   async update(req, res) {
     const { carbCount } = req.body;
     const { id } = req.params;
-
     const currentDate = moment().unix();
 
+    /**
+     * need to check if the user owns this particular record
+     *
+     */
     const params = {
       TableName: 'Keto31.CarbEntry',
       Key: { EntryId : id },
@@ -81,6 +85,10 @@ const controller = {
   async remove(req, res) {
     const { id } = req.params;
 
+    /**
+     * need to check if the user owns this particular record
+     *
+     */
     const params = {
       TableName: 'Keto31.CarbEntry',
       Key: {
