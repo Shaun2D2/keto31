@@ -1,5 +1,5 @@
 .home{
-	height: 89vh;
+	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -7,22 +7,5 @@
 }
 
 .home__title {
-	font-size: 6em;
-	color: #FFF;
-}
-
-.home__subtitle {
-	font-size: 1.5em;
-}
-
-.home__bubble {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	border: 3px solid #482879;
-	border-radius: 99%;
-	width: 350px;
-	height: 350px;
-	background-color: #482879;
+	font-size: 10em;
 }
