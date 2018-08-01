@@ -1,0 +1,74 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Keto 31 App",
+    "Resources": {
+        "UsersTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "KeySchema": [
+                    {
+                        "AttributeName" : "Email",
+                        "KeyType" : "HASH"
+                    }
+                ],
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName" : "Email",
+                        "AttributeType" : "S"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits" : 5,
+                    "WriteCapacityUnits" : 5
+                },
+                "TableName": "Keto31.Prod.Users"
+            }
+        },
+        "CarbsTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+                "KeySchema": [
+                    {
+                        "AttributeName" : "EntryId",
+                        "KeyType" : "HASH"
+                    },
+                    {
+                        "AttributeName" : "UserId",
+                        "KeyType" : "RANGE"
+                    }
+                ],
+                "AttributeDefinitions": [
+                    {
+                        "AttributeName" : "EntryId",
+                        "AttributeType" : "S"
+                    },
+                    {
+                        "AttributeName" : "UserId",
+                        "AttributeType" : "S"
+                    }
+                ],
+                "ProvisionedThroughput": {
+                    "ReadCapacityUnits" : 5,
+                    "WriteCapacityUnits" : 5
+                },
+                "TableName": "Keto31.Prod.CarbEntry"
+            }
+        },
+        "Application": {
+            "Type": "AWS::ElasticBeanstalk::Application",
+            "Properties": {
+                "ApplicationName": "Keto31",
+                "Description": "Test env for Keto31 app."
+            }
+        },
+        "Environment": {
+            "DependsOn": ["Application"],
+            "Type": "AWS::ElasticBeanstalk::Environment",
+            "Properties": {
+                "ApplicationName": "Keto31",
+                "EnvironmentName": "Keto31",
+                "TemplateName": "DefaultConfiguration"
+            }
+        }
+    }
+}

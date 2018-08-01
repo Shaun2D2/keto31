@@ -2,7 +2,7 @@ import React from 'react';
 
 const Dashboard = () => (
   <h1>
-  Dashboard
+  Dashboard here...
   </h1>
 );
 

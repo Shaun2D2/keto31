@@ -4,8 +4,12 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers/root';
 
 export default function configureStore() {
-  return createStore(
+  const store = createStore(
     rootReducer,
     applyMiddleware(thunk),
   );
+
+  window.redux = store;
+
+  return store;
 }
