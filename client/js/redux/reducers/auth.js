@@ -8,10 +8,24 @@ const loginUserAction = data => ({
   data,
 });
 
-export const loginUser = payload => (
+export const registerUser = payload => (
   async (dispatch) => {
     try {
       const response = await axios.post('/api/register', payload);
+
+      dispatch(loginUserAction(response.data));
+
+      return Promise.resolve();
+    } catch (e) {
+      return Promise.reject();
+    }
+  }
+);
+
+export const loginUser = payload => (
+  async (dispatch) => {
+    try {
+      const response = await axios.post('/api/login', payload);
 
       dispatch(loginUserAction(response.data));
 

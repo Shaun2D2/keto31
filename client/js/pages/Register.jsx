@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import autobind from 'react-autobind';
 
-import { loginUser } from '../redux/reducers/auth';
+import { registerUser } from '../redux/reducers/auth';
 import Card from '../components/Card';
 
 class Register extends Component {
@@ -30,7 +30,7 @@ class Register extends Component {
   async handleSubmit(e) {
     e.preventDefault();
 
-    const { login, history } = this.props;
+    const { register, history } = this.props;
     const {
       FirstName,
       LastName,
@@ -48,7 +48,7 @@ class Register extends Component {
 
       this.setState({ processing: true });
 
-      await login(payload);
+      await register(payload);
 
       history.push('/dashboard');
     } catch (err) {
@@ -62,7 +62,7 @@ class Register extends Component {
       LastName,
       Email,
       Password,
-      processing
+      processing,
     } = this.state;
 
     return (
@@ -132,7 +132,7 @@ class Register extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  login: payload => dispatch(loginUser(payload))
+  register: payload => dispatch(registerUser(payload)),
 });
 
 export default connect(
