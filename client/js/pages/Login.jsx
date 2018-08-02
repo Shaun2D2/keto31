@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import autobind from 'react-autobind';
+import { connect } from 'react-redux';
 
+import { loginUser } from '../redux/reducers/auth';
 import Input from '../components/Input';
 import Card from '../components/Card';
 
@@ -23,8 +25,17 @@ class Login extends Component {
     this.setState({ [name]: value });
   }
 
-  handleSubmit() {
-    // do a thing
+  async handleSubmit(e) {
+    e.preventDefault();
+
+    const { login, history } = this.props;
+    try {
+      await login(this.state);
+
+      history.push('/dashboard');
+    } catch (e) {
+      debugger;
+    }
   }
 
   render() {
@@ -56,7 +67,7 @@ class Login extends Component {
                   className="btn btn-lg btn-primary"
                   disabled={false}
                 >
-                  Register
+                  Login
                 </button>
                 <Link to="/" className="btn btn-lg btn-link">
                   Nevermind
@@ -70,4 +81,11 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => ({
+  login: payload => dispatch(loginUser(payload))
+});
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(Login);

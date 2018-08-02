@@ -6,19 +6,19 @@ const db = require('../database/connection');
 
 module.exports = {
   async index(req, res) {
-    const { email, password } = req.body;
+    const { Email, Password } = req.body;
 
     const params = {
       TableName: 'Keto31.Users',
       Key: {
-        Email: email
+        Email: Email
       }
     };
 
     try {
       const user = await db.get(params).promise();
 
-      if(user.Item && await bcrypt.compare(password, user.Item.Password)) {
+      if(user.Item && await bcrypt.compare(Password, user.Item.Password)) {
 
         const exp = moment().add(14, 'days').unix();
 
