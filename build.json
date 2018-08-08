@@ -54,21 +54,5 @@
                 "TableName": "Keto31.Prod.CarbEntry"
             }
         },
-        "Application": {
-            "Type": "AWS::ElasticBeanstalk::Application",
-            "Properties": {
-                "ApplicationName": "Keto31",
-                "Description": "Test env for Keto31 app."
-            }
-        },
-        "Environment": {
-            "DependsOn": ["Application"],
-            "Type": "AWS::ElasticBeanstalk::Environment",
-            "Properties": {
-                "ApplicationName": "Keto31",
-                "EnvironmentName": "Keto31",
-                "TemplateName": "DefaultConfiguration"
-            }
-        }
     }
 }
