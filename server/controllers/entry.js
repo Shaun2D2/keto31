@@ -7,6 +7,10 @@ const controller = {
     const { Email } = req.user;
     const params = {
       TableName: 'Keto31.CarbEntry',
+      Key: {
+        HashKey: 'EntryId',
+        RangeKey: 'UserId'
+      },
       FilterExpression: 'UserId = :userid',
       ExpressionAttributeValues: {
         ':userid': Email
