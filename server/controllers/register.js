@@ -6,7 +6,7 @@ const db = require('../database/connection');
 
 const controller = {
   async create(req, res) {
-    const { FirstName, LastName, Password, Email, DailyGoal } = req.body;
+    const { FirstName, LastName, Password, Email, CarbCount } = req.body;
 
     const hashedPassword = await bcrypt.hash(Password, 10);
 
@@ -17,7 +17,7 @@ const controller = {
         LastName,
         Password: hashedPassword,
         Email: Email.toLowerCase(),
-        DailyGoal,
+        CarbCount,
       }
     };
 

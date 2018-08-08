@@ -1,6 +1,9 @@
 import { Map } from 'immutable';
 import axios from 'axios';
 
+import { fetchUser } from './user';
+import authConfig from '../../utils/helpers';
+
 const USER_LOGIN = 'USER_LOGIN';
 
 const loginUserAction = data => ({
@@ -15,8 +18,13 @@ export const registerUser = payload => (
 
       dispatch(loginUserAction(response.data));
 
+      authConfig(response.data.token);
+
+      await dispatch(fetchUser());
+
       return Promise.resolve();
     } catch (e) {
+      console.log(e);
       return Promise.reject();
     }
   }

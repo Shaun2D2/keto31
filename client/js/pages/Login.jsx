@@ -14,6 +14,7 @@ class Login extends Component {
     autobind(this);
 
     this.state = {
+      processing: false,
       Email: '',
       Password: '',
     };
@@ -28,21 +29,29 @@ class Login extends Component {
   async handleSubmit(e) {
     e.preventDefault();
 
+    this.setState({ processing: true });
+
     const { login, history } = this.props;
+    const { Email, Password } = this.state;
     try {
-      await login(this.state);
+      await login({ Email, Password });
 
       history.push('/dashboard');
     } catch (e) {
-      debugger;
+      this.setState({ processing: false, submitError: true });
     }
   }
 
   render() {
-    const { Email, Password } = this.state;
+    const {
+      Email,
+      Password,
+      submitError,
+      processing,
+    } = this.state;
 
     return (
-      <div className="container" style={{ margin: 100 }}>
+      <div className="container" style={{ marginTop: 100 }}>
         <div className="row">
           <div className="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-12 offset-sm-0">
             <Card>
@@ -62,10 +71,13 @@ class Login extends Component {
                   name="Password"
                   onChange={this.handleChange}
                 />
+                {submitError && (
+                  <p className="text-danger">Invalid Login, try again</p>
+                )}
                 <button
                   type="submit"
                   className="btn btn-lg btn-primary"
-                  disabled={false}
+                  disabled={processing}
                 >
                   Login
                 </button>

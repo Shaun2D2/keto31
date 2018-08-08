@@ -8,12 +8,14 @@ const Home = () => (
     <h1 className="app-brand home__title">
       Keto31
     </h1>
-    <Link to="register">
-      Register
-    </Link>
-    <Link to="login">
-      Login
-    </Link>
+    <div className="button-group">
+      <Link to="register" className="button button-glass">
+        Register
+      </Link>
+      <Link to="login" className="button button-glass">
+        Login
+      </Link>
+    </div>
   </div>
 );
 

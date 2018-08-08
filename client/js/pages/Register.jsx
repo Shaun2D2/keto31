@@ -5,6 +5,7 @@ import autobind from 'react-autobind';
 
 import { registerUser } from '../redux/reducers/auth';
 import Card from '../components/Card';
+import Input from '../components/Input';
 
 class Register extends Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class Register extends Component {
       LastName: '',
       Email: '',
       Password: '',
+      CarbCount: 100,
       processing: false,
     };
 
@@ -36,6 +38,7 @@ class Register extends Component {
       LastName,
       Email,
       Password,
+      CarbCount,
     } = this.state;
 
     try {
@@ -44,6 +47,7 @@ class Register extends Component {
         LastName,
         Email,
         Password,
+        CarbCount,
       };
 
       this.setState({ processing: true });
@@ -63,55 +67,50 @@ class Register extends Component {
       Email,
       Password,
       processing,
+      CarbCount,
     } = this.state;
 
     return (
-      <div className="container" style={{ margin: 100 }}>
+      <div className="container" style={{ marginTop: 100 }}>
         <div className="row">
           <div className="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-12 offset-sm-0">
             <Card>
               <form onSubmit={this.handleSubmit}>
                 <h3 className="legend">Create Account</h3>
-                <div className="form-group">
-                  <label>First Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={FirstName}
-                    name="FirstName"
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Last Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={LastName}
-                    name="LastName"
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    value={Email}
-                    name="Email"
-                    onChange={this.handleChange}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    value={Password}
-                    name="Password"
-                    onChange={this.handleChange}
-                  />
-                </div>
+                <Input
+                  label="First Name"
+                  value={FirstName}
+                  name="FirstName"
+                  onChange={this.handleChange}
+                  autofocus
+                />
+                <Input
+                  label="Last Name"
+                  value={LastName}
+                  name="LastName"
+                  onChange={this.handleChange}
+                />
+                <Input
+                  label="Email"
+                  type="email"
+                  value={Email}
+                  name="Email"
+                  onChange={this.handleChange}
+                />
+                <Input
+                  label="Password"
+                  type="password"
+                  value={Password}
+                  name="Password"
+                  onChange={this.handleChange}
+                />
+                <Input
+                  label="Daily Carb Count"
+                  value={CarbCount}
+                  name="CarbCount"
+                  onChange={this.handleChange}
+                />
+
                 <button
                   type="submit"
                   className="btn btn-lg btn-primary"

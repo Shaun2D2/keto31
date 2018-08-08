@@ -13,6 +13,10 @@
 
 .home__title {
 	font-size: 10em;
+	margin-bottom: 50px;
+	@media(max-width: 425px) {
+			font-size: 5em;
+	}
 }
 
 @-webkit-keyframes Gradient {
