@@ -1,9 +1,11 @@
 import CircularProgressbar from 'react-circular-progressbar';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Carousel from 'nuka-carousel';
 import moment from 'moment';
 
 import Card from '../components/Card';
+import { fetchEntries } from '../redux/reducers/entries';
 
 import 'react-circular-progressbar/dist/styles.css';
 import '../../sass/Dashboard.scss';
@@ -37,16 +39,34 @@ class Dashboard extends Component {
     super(props);
 
     this.state = {
-      something: '',
+      loading: true,
     };
   }
 
-  generateSlides() {
-    const slides = [];
+  async componentDidMount() {
+    const { getEntries } = this.props;
+    try {
+      await getEntries();
 
-    for(let i = 0; i < 10 ; i += 1) {
-      slides.push(
-        <Card isFlex style={{ maxHeight: '100vh' }}>
+      this.setState({ loading: false });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  generateSlides() {
+    const { entries, carbLimit } = this.props;
+    const slides = new Array(moment().daysInMonth());
+    // const carbPercent = carbLimit /
+debugger;
+    slides.map((slide, index) => {
+      // debugger;
+      // const totalDailyCarbCount = entries.filter(
+      //   entry => moment(entry.CreatedAt).format('M-DD-YYYY') === moment().format(`M-${index + 1}-YYYY`)
+      // );
+
+      return (
+        <Card isFlex isGlass style={{ maxHeight: '100vh', marginTop: 25 }}>
           <CircularProgressbar
               percentage={percentage}
               text={`${percentage}%`}
@@ -67,13 +87,24 @@ class Dashboard extends Component {
               </div>
             ))
           }
-        </Card>)
-    }
+        </Card>
+      );
+    });
 
-    return slides
+    return slides;
   }
 
   render() {
+    const { loading } = this.state;
+
+    if (loading) {
+      return (
+        <h1>
+          Loading...
+        </h1>
+      );
+    }
+
     const allSlides = this.generateSlides();
 
     return (
@@ -96,4 +127,18 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  carbLimit: state.getIn(['user', 'CarbCount']),
+  entries: state.get('entries'),
+});
+
+const mapDispatchToProps = dispatch => ({
+  getEntries: () => dispatch(fetchEntries()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Dashboard);
+
+export { Dashboard };

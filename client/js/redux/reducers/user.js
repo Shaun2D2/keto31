@@ -12,7 +12,7 @@ export const fetchUser = () => (
   async (dispatch) => {
     try {
       const response = await axios.get('/api/user');
-      debugger;
+
       dispatch(fetchUserAction(response.data));
 
       return Promise.resolve();

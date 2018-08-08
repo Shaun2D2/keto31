@@ -37,6 +37,10 @@ export const loginUser = payload => (
 
       dispatch(loginUserAction(response.data));
 
+      authConfig(response.data.token);
+
+      await dispatch(fetchUser());
+
       return Promise.resolve();
     } catch (e) {
       return Promise.reject();
